@@ -113,12 +113,21 @@
           <div class="help-text collapse-help" id="collapseHelp" data-i18n="settingCollapseDelayHelp">
             0 = immediate, or set delay (100-5000ms) before collapsing
           </div>
-          <div class="toggle-container">
-            <span data-i18n="settingOpenNewTabsNextToCurrent">Open new tabs next to current tab</span>
-            <label class="switch">
-              <input type="checkbox" id="openTabNextToCurrentToggle" />
-              <span class="slider round"></span>
-            </label>
+        <div class="toggle-container language-row">
+          <span data-i18n="settingOpenNewTabPosition">Open new Tab</span>
+          <select
+            id="openTabPositionSelect"
+            class="language-select"
+            aria-label="Open new Tab"
+            data-i18n-aria-label="settingOpenNewTabPosition"
+          >
+            <option value="default" data-i18n="settingTabPositionDefault">browser default</option>
+            <option value="first" data-i18n="settingTabPositionFirst">At first position</option>
+            <option value="last" data-i18n="settingTabPositionLast">at the end</option>
+            <option value="previous" data-i18n="settingTabPositionPrevious">before current tab</option>
+            <option value="next" data-i18n="settingTabPositionNext">after current tab</option>
+            <option value="middle" data-i18n="settingTabPositionMiddle">in the middle of the group</option>
+          </select>
           </div>
           <div class="settings-info">
             <span class="info-icon">&#128204;</span>

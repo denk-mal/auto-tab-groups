@@ -97,10 +97,6 @@
     "message": "0 = מיידי, או הגדר השהיה (100-5000ms) לפני מזעור",
     "description": "Help text under the collapse-delay input."
   },
-  "settingOpenNewTabsNextToCurrent": {
-    "message": "פתח לשוניות חדשות ליד הלשונית הנוכחית",
-    "description": "Label for the toggle that opens new tabs adjacent to the active tab."
-  },
   "settingPinnedTabsNote": {
     "message": "לשוניות נעוצות אינן מקובצות אוטומטית",
     "description": "Informational note about pinned tabs."

@@ -97,10 +97,6 @@
     "message": "0 = немедленно, либо задайте задержку (100–5000 мс) перед сворачиванием",
     "description": "Help text under the collapse-delay input."
   },
-  "settingOpenNewTabsNextToCurrent": {
-    "message": "Открывать новые вкладки рядом с текущей",
-    "description": "Label for the toggle that opens new tabs adjacent to the active tab."
-  },
   "settingPinnedTabsNote": {
     "message": "Закреплённые вкладки никогда не группируются автоматически",
     "description": "Informational note about pinned tabs."

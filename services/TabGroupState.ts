@@ -10,6 +10,7 @@ import type {
   RuleMatchingMode,
   SortDirection,
   StorageSchema,
+  TabPosition,
   UserLocale
 } from "../types"
 import { DEFAULT_STATE } from "../types/storage"
@@ -23,7 +24,7 @@ class TabGroupState {
   minimumTabsForGroup: number
   autoCollapseEnabled: boolean
   autoCollapseDelayMs: number
-  openTabNextToCurrent: boolean
+  tabPosition: TabPosition
   sortGroupsAlphabetically: boolean
   sortGroupsDirection: SortDirection
   indexGroupTitles: boolean
@@ -39,7 +40,7 @@ class TabGroupState {
     this.minimumTabsForGroup = DEFAULT_STATE.minimumTabsForGroup
     this.autoCollapseEnabled = DEFAULT_STATE.autoCollapseEnabled
     this.autoCollapseDelayMs = DEFAULT_STATE.autoCollapseDelayMs
-    this.openTabNextToCurrent = DEFAULT_STATE.openTabNextToCurrent
+    this.tabPosition = DEFAULT_STATE.tabPosition
     this.sortGroupsAlphabetically = DEFAULT_STATE.sortGroupsAlphabetically
     this.sortGroupsDirection = DEFAULT_STATE.sortGroupsDirection
     this.indexGroupTitles = DEFAULT_STATE.indexGroupTitles
@@ -58,7 +59,7 @@ class TabGroupState {
     this.minimumTabsForGroup = data.minimumTabsForGroup ?? this.minimumTabsForGroup
     this.autoCollapseEnabled = data.autoCollapseEnabled ?? this.autoCollapseEnabled
     this.autoCollapseDelayMs = data.autoCollapseDelayMs ?? this.autoCollapseDelayMs
-    this.openTabNextToCurrent = data.openTabNextToCurrent ?? this.openTabNextToCurrent
+    this.tabPosition = data.tabPosition ?? this.tabPosition
     this.sortGroupsAlphabetically = data.sortGroupsAlphabetically ?? this.sortGroupsAlphabetically
     this.sortGroupsDirection = data.sortGroupsDirection ?? this.sortGroupsDirection
     this.indexGroupTitles = data.indexGroupTitles ?? this.indexGroupTitles
@@ -88,7 +89,7 @@ class TabGroupState {
       minimumTabsForGroup: this.minimumTabsForGroup,
       autoCollapseEnabled: this.autoCollapseEnabled,
       autoCollapseDelayMs: this.autoCollapseDelayMs,
-      openTabNextToCurrent: this.openTabNextToCurrent,
+      tabPosition: this.tabPosition,
       sortGroupsAlphabetically: this.sortGroupsAlphabetically,
       sortGroupsDirection: this.sortGroupsDirection,
       indexGroupTitles: this.indexGroupTitles,

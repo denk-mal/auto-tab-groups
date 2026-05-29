@@ -97,10 +97,6 @@
     "message": "0 = inmediato, o establece el retardo (100-5000 ms) antes de contraer",
     "description": "Help text under the collapse-delay input."
   },
-  "settingOpenNewTabsNextToCurrent": {
-    "message": "Abrir pestañas nuevas junto a la pestaña actual",
-    "description": "Label for the toggle that opens new tabs adjacent to the active tab."
-  },
   "settingPinnedTabsNote": {
     "message": "Las pestañas ancladas nunca se agrupan automáticamente",
     "description": "Informational note about pinned tabs."

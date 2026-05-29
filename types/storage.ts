@@ -27,6 +27,11 @@ export type SortDirection = "asc" | "desc"
 export type UserLocale = "auto" | "en" | "he" | "ar" | "es" | "hi" | "ru" | "zh"
 
 /**
+ * User-selected new tap open position. "default" defers to the browser's standard.
+ */
+export type TabPosition = "default" | "first" | "last" | "previous" | "next" | "middle"
+
+/**
  * Mapping of group titles to their colors
  */
 export type GroupColorMapping = Record<string, TabGroupColor>
@@ -64,8 +69,8 @@ export interface StorageSchema {
   aiProvider: AiProvider
   /** Selected AI model ID */
   aiModelId: string
-  /** Whether to open new tabs next to the current tab (opt-in, default off) */
-  openTabNextToCurrent: boolean
+  /** New position to open new tabs */
+  tabPosition: TabPosition
   /** Whether to keep tab groups sorted alphabetically */
   sortGroupsAlphabetically: boolean
   /** Sort direction when alphabetical sorting is enabled ("asc" = A-Z, "desc" = Z-A) */
@@ -94,7 +99,7 @@ export const DEFAULT_STATE: StorageSchema = {
   aiEnabled: false,
   aiProvider: "webllm",
   aiModelId: "Qwen2.5-3B-Instruct-q4f16_1-MLC",
-  openTabNextToCurrent: false,
+  tabPosition: "default",
   sortGroupsAlphabetically: false,
   sortGroupsDirection: "asc",
   indexGroupTitles: false,

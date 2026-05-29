@@ -27,8 +27,8 @@ export type MessageAction =
   | "setGroupByMode"
   | "getMinimumTabsForGroup"
   | "setMinimumTabsForGroup"
-  | "getOpenTabNextToCurrent"
-  | "toggleOpenTabNextToCurrent"
+  | "getTabPosition"
+  | "setTabPosition"
   | "getSortGroupsAlphabetically"
   | "toggleSortGroupsAlphabetically"
   | "getSortGroupsDirection"
@@ -75,7 +75,7 @@ export interface SimpleMessage extends BaseMessage {
     | "getOnlyApplyToNewTabs"
     | "getGroupByMode"
     | "getMinimumTabsForGroup"
-    | "getOpenTabNextToCurrent"
+    | "getTabPosition"
     | "getSortGroupsAlphabetically"
     | "getSortGroupsDirection"
     | "getIndexGroupTitles"
@@ -123,14 +123,6 @@ export interface SetGroupByModeMessage extends BaseMessage {
 export interface SetMinimumTabsMessage extends BaseMessage {
   action: "setMinimumTabsForGroup"
   minimumTabs: number
-}
-
-/**
- * Toggle open tab next to current message
- */
-export interface ToggleOpenTabNextToCurrentMessage extends BaseMessage {
-  action: "toggleOpenTabNextToCurrent"
-  enabled: boolean
 }
 
 /**
@@ -225,7 +217,6 @@ export type Message =
   | ToggleGroupNewTabsMessage
   | SetGroupByModeMessage
   | SetMinimumTabsMessage
-  | ToggleOpenTabNextToCurrentMessage
   | ToggleSortGroupsMessage
   | SetSortGroupsDirectionMessage
   | ToggleIndexGroupTitlesMessage

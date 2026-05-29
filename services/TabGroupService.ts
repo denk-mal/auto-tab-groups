@@ -4,7 +4,7 @@
  */
 
 import type { Browser } from "wxt/browser"
-import type { CustomRule, TabGroupColor } from "../types"
+import type { CustomRule, TabGroupColor, TabPosition } from "../types"
 import { getRandomTabGroupColor } from "../utils/Constants"
 import { extractDomain, getDomainDisplayName } from "../utils/DomainUtils"
 import { getGroupColor, groupColorMapping, updateGroupColor } from "../utils/storage"
@@ -245,8 +245,13 @@ class TabGroupServiceSimplified {
     if (existingGroup) {
       if (tab.groupId === existingGroup.id) {
         console.log(`[TabGroupService] Tab ${tabId} already in correct group`)
-        if (this.consumeNewTabFlag(tabId) && tabGroupState.openTabNextToCurrent) {
-          await this.repositionTabNextToOpener(tabId, tab, existingGroup.id)
+        if (this.consumeNewTabFlag(tabId)) {
+          await this.repositionTabAtPositionToOpener(
+            tabId,
+            tab,
+            tabGroupState.tabPosition,
+            existingGroup.id
+          )
         }
         // Return false — no group change occurred, so no re-sorting needed
         return false
@@ -261,9 +266,12 @@ class TabGroupServiceSimplified {
       )
 
       this.consumeNewTabFlag(tabId)
-      if (tabGroupState.openTabNextToCurrent) {
-        await this.repositionTabNextToOpener(tabId, tab, existingGroup.id)
-      }
+      await this.repositionTabAtPositionToOpener(
+        tabId,
+        tab,
+        tabGroupState.tabPosition,
+        existingGroup.id
+      )
 
       // Update color if from custom rule
       if (customRule?.color && existingGroup.color !== customRule.color) {
@@ -859,24 +867,64 @@ class TabGroupServiceSimplified {
   }
 
   /**
-   * Repositions a tab directly after its opener tab within the same group.
-   * Only acts when the tab has an openerTabId and the opener is in the same group.
-   * Fails silently since positioning is a best-effort enhancement.
+   * Repositions a tab ata position to its last accessed tab within the same group.
+   * Only acts when the tab has an openerTabId.
+   * show a small log on failure.
    */
-  private async repositionTabNextToOpener(
+  private async repositionTabAtPositionToOpener(
     tabId: number,
     tab: Browser.tabs.Tab,
+    tabPosition: TabPosition,
     groupId: number
   ): Promise<void> {
     if (!tab.openerTabId) return
 
     try {
-      const openerTab = await browser.tabs.get(tab.openerTabId)
-      if (openerTab.groupId !== groupId) return
-      if (typeof openerTab.index !== "number") return
+      console.log("[TabGroupService] Reposition tab position tab:", tabPosition)
+      const groupTabs = await browser.tabs.query({
+        active: false, // filter out the new tab, which is the active one
+        groupId
+      })
+      // repair index for a gapless series
+      groupTabs.sort((a, b) => a.index - b.index)
+      groupTabs.forEach((tab: Browser.tabs.Tab, index) => {
+        tab.index = index + 1
+      })
+      // sort desending access (first is last accesed befor the new tab)
+      groupTabs.sort((a, b) => {
+        if (a.lastAccessed === undefined) return 1
+        if (b.lastAccessed === undefined) return -1
+        return b.lastAccessed - a.lastAccessed
+      })
 
-      await withTabEditRetry(() => browser.tabs.move(tabId, { index: openerTab.index + 1 }))
+      let index = 0
+      switch (tabPosition) {
+        case "first":
+          index = 0
+          break
+        case "last":
+          index = groupTabs.length
+          break
+        case "previous":
+        case "next": {
+          index = groupTabs[0].index
+          if (tabPosition === "next") {
+            index++
+          }
+          break
+        }
+        case "middle": {
+          index = Math.round(groupTabs.length / 2) + 1
+          break
+        }
+        default:
+          return
+      }
+
+      console.log("[TabGroupService] Reposition tab to position: ", index)
+      await withTabEditRetry(() => browser.tabs.move(tabId, { index: index }))
     } catch {
+      console.warn("[TabGroupService] Reposition tab position failed!")
       // Best-effort — opener may have been closed
     }
   }

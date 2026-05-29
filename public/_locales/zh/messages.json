@@ -97,10 +97,6 @@
     "message": "0 = 立即,或设置折叠前的延迟 (100-5000 毫秒)",
     "description": "Help text under the collapse-delay input."
   },
-  "settingOpenNewTabsNextToCurrent": {
-    "message": "在当前标签页旁打开新标签页",
-    "description": "Label for the toggle that opens new tabs adjacent to the active tab."
-  },
   "settingPinnedTabsNote": {
     "message": "固定的标签页永远不会被自动分组",
     "description": "Informational note about pinned tabs."

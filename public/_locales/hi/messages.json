@@ -97,10 +97,6 @@
     "message": "0 = तुरंत, या समेटने से पहले विलंब सेट करें (100-5000 मिली सेकंड)",
     "description": "Help text under the collapse-delay input."
   },
-  "settingOpenNewTabsNextToCurrent": {
-    "message": "नए टैब्स को वर्तमान टैब के बगल में खोलें",
-    "description": "Label for the toggle that opens new tabs adjacent to the active tab."
-  },
   "settingPinnedTabsNote": {
     "message": "पिन किए गए टैब्स कभी भी स्वचालित रूप से समूहित नहीं होते",
     "description": "Informational note about pinned tabs."

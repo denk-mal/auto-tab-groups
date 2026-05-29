@@ -14,6 +14,7 @@ import type {
   SortDirection,
   StorageSchema,
   TabGroupColor,
+  TabPosition,
   UserLocale
 } from "../types"
 import { DEFAULT_STATE } from "../types/storage"
@@ -69,8 +70,8 @@ export const aiModelId = storage.defineItem<string>("local:aiModelId", {
   fallback: DEFAULT_STATE.aiModelId
 })
 
-export const openTabNextToCurrent = storage.defineItem<boolean>("local:openTabNextToCurrent", {
-  fallback: DEFAULT_STATE.openTabNextToCurrent
+export const tabPosition = storage.defineItem<TabPosition>("local:tabPosition", {
+  fallback: DEFAULT_STATE.tabPosition
 })
 
 export const sortGroupsAlphabetically = storage.defineItem<boolean>(
@@ -119,7 +120,7 @@ export async function loadAllStorage(): Promise<StorageSchema> {
     aiEnabledValue,
     aiProviderValue,
     aiModelIdValue,
-    openTabNextToCurrentValue,
+    tabPositionValue,
     sortGroupsAlphabeticallyValue,
     sortGroupsDirectionValue,
     indexGroupTitlesValue,
@@ -138,7 +139,7 @@ export async function loadAllStorage(): Promise<StorageSchema> {
     aiEnabled.getValue(),
     aiProvider.getValue(),
     aiModelId.getValue(),
-    openTabNextToCurrent.getValue(),
+    tabPosition.getValue(),
     sortGroupsAlphabetically.getValue(),
     sortGroupsDirection.getValue(),
     indexGroupTitles.getValue(),
@@ -159,7 +160,7 @@ export async function loadAllStorage(): Promise<StorageSchema> {
     aiEnabled: aiEnabledValue,
     aiProvider: aiProviderValue,
     aiModelId: aiModelIdValue,
-    openTabNextToCurrent: openTabNextToCurrentValue,
+    tabPosition: tabPositionValue,
     sortGroupsAlphabetically: sortGroupsAlphabeticallyValue,
     sortGroupsDirection: sortGroupsDirectionValue,
     indexGroupTitles: indexGroupTitlesValue,
@@ -210,8 +211,8 @@ export async function saveAllStorage(data: Partial<StorageSchema>): Promise<void
   if (data.aiModelId !== undefined) {
     promises.push(aiModelId.setValue(data.aiModelId))
   }
-  if (data.openTabNextToCurrent !== undefined) {
-    promises.push(openTabNextToCurrent.setValue(data.openTabNextToCurrent))
+  if (data.tabPosition !== undefined) {
+    promises.push(tabPosition.setValue(data.tabPosition))
   }
   if (data.sortGroupsAlphabetically !== undefined) {
     promises.push(sortGroupsAlphabetically.setValue(data.sortGroupsAlphabetically))

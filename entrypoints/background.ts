@@ -204,14 +204,14 @@ export default defineBackground(() => {
             result = { minimumTabs: tabGroupState.minimumTabsForGroup }
             break
 
-          case "getOpenTabNextToCurrent":
-            result = { enabled: tabGroupState.openTabNextToCurrent }
+          case "getTabPosition":
+            result = { tabPosition: tabGroupState.tabPosition }
             break
 
-          case "toggleOpenTabNextToCurrent":
-            tabGroupState.openTabNextToCurrent = msg.enabled
+          case "setTabPosition":
+            tabGroupState.tabPosition = msg.tabPosition
             await saveState()
-            result = { enabled: tabGroupState.openTabNextToCurrent }
+            result = { tabPosition: tabGroupState.tabPosition }
             break
 
           case "getSortGroupsAlphabetically":

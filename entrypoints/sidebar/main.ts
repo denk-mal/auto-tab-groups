@@ -1,6 +1,6 @@
 // Sidebar shares the same logic and styles as popup
 import "../popup/style.css"
-import type { CustomRule, UserLocale } from "../../types"
+import type { CustomRule, TabPosition, UserLocale } from "../../types"
 import type { AiGroupSuggestion } from "../../types/ai-messages"
 import { extractDomain } from "../../utils/DomainUtils"
 import {
@@ -32,9 +32,7 @@ const collapseDelayInput = document.getElementById("collapseDelayInput") as HTML
 const collapseHelp = document.getElementById("collapseHelp") as HTMLDivElement
 
 // Tab Positioning Elements
-const openTabNextToCurrentToggle = document.getElementById(
-  "openTabNextToCurrentToggle"
-) as HTMLInputElement
+const openTabPositionSelect = document.getElementById("openTabPositionSelect") as HTMLSelectElement
 
 // Sorting Elements
 const sortingToggle = document.querySelector(".sorting-toggle") as HTMLButtonElement
@@ -517,7 +515,6 @@ async function editRule(ruleId: string): Promise<void> {
   }
 }
 
-// Delete rule
 // Open add blacklist rule modal
 async function addBlacklistRule(): Promise<void> {
   try {
@@ -553,6 +550,7 @@ function toggleBlacklistSection(): void {
   }
 }
 
+// Delete rule
 async function deleteRule(ruleId: string, ruleName: string): Promise<void> {
   const prompt = t(
     "rulesDeleteConfirm",
@@ -743,10 +741,10 @@ sendMessage<{ enabled?: boolean; delayMs?: number }>({
   updateCollapseDelayVisibility(enabled)
 })
 
-// Initialize open tab next to current state
-sendMessage<{ enabled?: boolean }>({ action: "getOpenTabNextToCurrent" }).then(response => {
-  openTabNextToCurrentToggle.checked = response?.enabled ?? false
-})
+// Initialize open tab at position to current state
+const resp = await sendMessage<{ tabPosition?: TabPosition }>({ action: "getTabPosition" })
+const tabPosition: TabPosition = resp?.tabPosition ?? "default"
+openTabPositionSelect.value = tabPosition
 
 // Initialize sort groups and index state
 sendMessage<{ enabled?: boolean }>({ action: "getSortGroupsAlphabetically" }).then(response => {
@@ -823,12 +821,10 @@ collapseDelayInput.addEventListener("change", async () => {
   })
 })
 
-// Open tab next to current event listener
-openTabNextToCurrentToggle.addEventListener("change", event => {
-  sendMessage({
-    action: "toggleOpenTabNextToCurrent",
-    enabled: (event.target as HTMLInputElement).checked
-  })
+// Open tab at position to current event listener
+openTabPositionSelect.addEventListener("change", async () => {
+  const tabPosition = openTabPositionSelect.value as TabPosition
+  await sendMessage({ action: "setTabPosition", tabPosition })
 })
 
 // Sorting section toggle
@@ -948,6 +944,7 @@ async function initializeAiSection(): Promise<void> {
       updateAiModelStatus(response.modelStatus)
     }
 
+    // Check WebGPU support
     const webGpuResponse = await sendMessage<{
       webGpu?: { available: boolean; reason: string | null }
     }>({ action: "checkWebGpuSupport" })
@@ -984,6 +981,7 @@ function updateAiModelStatus(modelStatus: {
 }): void {
   const { status, progress, error } = modelStatus
 
+  // Update status badge
   aiStatusBadge.textContent =
     status === "idle"
       ? t("aiStatusIdle", "Idle")
@@ -998,6 +996,7 @@ function updateAiModelStatus(modelStatus: {
     aiStatusBadge.classList.add(status)
   }
 
+  // Update progress bar
   if (status === "loading") {
     aiProgressBar.classList.add("visible")
     aiProgressFill.style.width = `${progress}%`
@@ -1005,6 +1004,7 @@ function updateAiModelStatus(modelStatus: {
     aiProgressBar.classList.remove("visible")
   }
 
+  // Update load button
   if (status === "ready") {
     aiLoadButton.textContent = t("aiUnloadModel", "Unload Model")
     aiLoadButton.classList.add("unload")

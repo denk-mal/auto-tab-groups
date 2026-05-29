@@ -97,9 +97,33 @@
     "message": "0 = immediate, or set delay (100-5000ms) before collapsing",
     "description": "Help text under the collapse-delay input."
   },
-  "settingOpenNewTabsNextToCurrent": {
-    "message": "Open new tabs next to current tab",
+  "settingOpenNewTabPosition": {
+    "message": "Open new Tab",
     "description": "Label for the toggle that opens new tabs adjacent to the active tab."
+  },
+  "settingTabPositionDefault": {
+    "message": "Default (browser default)",
+    "description": "Picker option that defers to the browser's UI language."
+  },
+  "settingTabPositionFirst": {
+    "message": "At first position",
+    "description": "Picker option that defers to the browser's UI language."
+  },
+  "settingTabPositionLast": {
+    "message": "at the end",
+    "description": "Picker option that defers to the browser's UI language."
+  },
+  "settingTabPositionPrevious": {
+    "message": "before current tab",
+    "description": "Picker option that defers to the browser's UI language."
+  },
+  "settingTabPositionNext": {
+    "message": "after current tab",
+    "description": "Picker option that defers to the browser's UI language."
+  },
+  "settingTabPositionMiddle": {
+    "message": "in the middle of the group",
+    "description": "Picker option that defers to the browser's UI language."
   },
   "settingPinnedTabsNote": {
     "message": "Pinned tabs are never grouped automatically",

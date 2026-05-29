@@ -97,10 +97,6 @@
     "message": "0 = فوري، أو حدّد التأخير (100-5000 مللي ثانية) قبل الطي",
     "description": "Help text under the collapse-delay input."
   },
-  "settingOpenNewTabsNextToCurrent": {
-    "message": "فتح علامات التبويب الجديدة بجوار علامة التبويب الحالية",
-    "description": "Label for the toggle that opens new tabs adjacent to the active tab."
-  },
   "settingPinnedTabsNote": {
     "message": "لا تُجمَّع علامات التبويب المثبَّتة تلقائياً أبداً",
     "description": "Informational note about pinned tabs."
