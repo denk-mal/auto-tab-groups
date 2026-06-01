@@ -903,7 +903,7 @@ class TabGroupServiceSimplified {
           index = 0
           break
         case "last":
-          index = groupTabs.length
+          index = groupTabs.length + 1
           break
         case "previous":
         case "next": {
