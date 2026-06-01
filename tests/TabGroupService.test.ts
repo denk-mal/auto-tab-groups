@@ -933,7 +933,7 @@ describe("TabGroupService", () => {
         tabIds: [2],
         groupId: 100
       })
-      expect(mockBrowser.tabs.move).toHaveBeenCalledWith(2, { index: 6 })
+      expect(mockBrowser.tabs.move).toHaveBeenCalledWith(2, { index: 7 })
     })
 
     it("should position tab previous to opener", async () => {
